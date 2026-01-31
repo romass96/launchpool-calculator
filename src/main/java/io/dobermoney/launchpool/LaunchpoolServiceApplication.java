@@ -1,6 +1,6 @@
 package io.dobermoney.launchpool;
 
-import io.dobermoney.launchpool.config.CoingeckoProperties;
+import io.dobermoney.launchpool.config.properties.CoingeckoProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -2,7 +2,7 @@ package io.dobermoney.launchpool.service.impl;
 
 import io.dobermoney.launchpool.client.CoingeckoClient;
 import io.dobermoney.launchpool.client.response.CoingeckoCoinResponse;
-import io.dobermoney.launchpool.config.CoingeckoProperties;
+import io.dobermoney.launchpool.config.properties.CoingeckoProperties;
 import io.dobermoney.launchpool.model.Coin;
 import io.dobermoney.launchpool.model.CoinPrice;
 import io.dobermoney.launchpool.model.Currency;

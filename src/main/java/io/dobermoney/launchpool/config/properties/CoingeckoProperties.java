@@ -1,4 +1,4 @@
-package io.dobermoney.launchpool.config;
+package io.dobermoney.launchpool.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

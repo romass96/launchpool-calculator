@@ -7,7 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.retry.RetryCallback;
 import org.springframework.retry.RetryContext;
-import org.springframework.retry.listener.RetryListenerSupport;
+import org.springframework.retry.RetryListener;
 import org.springframework.retry.policy.ExceptionClassifierRetryPolicy;
 import org.springframework.retry.policy.NeverRetryPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
@@ -39,7 +39,7 @@ public class RetryConfig {
                 .customBackoff(new RetryAfterBackOffPolicy())
                 .build();
 
-        retryTemplate.registerListener(new RetryListenerSupport() {
+        retryTemplate.registerListener(new RetryListener() {
             @Override
             public <T, E extends Throwable> void onError(RetryContext context, RetryCallback<T, E> callback, Throwable throwable) {
                 long retryAfterSeconds = parseRetryAfter(throwable);
