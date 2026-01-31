@@ -14,5 +14,5 @@ spring:
 
 integrations:
   coingecko:
-    api-key: "CG-VvuRreekiYLyJ7DkkLW5SBTN"
+    api-key: "${COINGECKO_API_KEY}"
     api-url: "https://api.coingecko.com/api/v3"

@@ -1,12 +1,12 @@
 .gradle
 build/
 data/
-!gradle/wrapper/gradle-wrapper.jar
+!gradle/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### Vaadin ###
-!**/src/main/frontend/**
+!**/src/main/frontend/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
