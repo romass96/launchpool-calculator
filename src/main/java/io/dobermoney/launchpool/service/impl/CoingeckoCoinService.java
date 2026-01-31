@@ -2,18 +2,14 @@ package io.dobermoney.launchpool.service.impl;
 
 import io.dobermoney.launchpool.client.CoingeckoClient;
 import io.dobermoney.launchpool.client.response.CoingeckoCoinResponse;
-import io.dobermoney.launchpool.config.properties.CoingeckoProperties;
 import io.dobermoney.launchpool.model.Coin;
 import io.dobermoney.launchpool.model.CoinPrice;
 import io.dobermoney.launchpool.model.Currency;
 import io.dobermoney.launchpool.service.CoinService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.support.RestClientAdapter;
-import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -23,40 +19,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static io.dobermoney.launchpool.config.CoingeckoConfig.COINGECKO_RETRY_TEMPLATE_BEAN;
+
 /**
  * CoinService implementation that fetches data from the Coingecko API.
  * Uses retry logic with Retry-After header support for rate limit (429) responses.
  */
-@Slf4j
 @Service
+@RequiredArgsConstructor
 public class CoingeckoCoinService implements CoinService {
-    private static final String API_KEY_HEADER = "x_cg_pro_api_key";
     private static final String ORDER = "market_cap_desc";
     private static final int PAGE_SIZE = 250;
 
     private final CoingeckoClient coingeckoClient;
+    @Qualifier(COINGECKO_RETRY_TEMPLATE_BEAN)
     private final RetryTemplate retryTemplate;
-
-    /**
-     * Creates the Coingecko coin service with retry support and API configuration.
-     *
-     * @param retryTemplate         retry template for handling rate limits
-     * @param coingeckoProperties   API key and URL configuration
-     */
-    public CoingeckoCoinService(@Qualifier("coingeckoRetryTemplate") RetryTemplate retryTemplate,
-            CoingeckoProperties coingeckoProperties) {
-        this.retryTemplate = retryTemplate;
-
-        var restClient = RestClient.builder()
-                .baseUrl(coingeckoProperties.apiUrl())
-                .defaultHeader(API_KEY_HEADER, coingeckoProperties.apiKey())
-                .build();
-
-        var httpServiceProxyFactory = HttpServiceProxyFactory
-                .builderFor(RestClientAdapter.create(restClient))
-                .build();
-        this.coingeckoClient = httpServiceProxyFactory.createClient(CoingeckoClient.class);
-    }
 
     @Override
     public Set<Coin> readCoins() {

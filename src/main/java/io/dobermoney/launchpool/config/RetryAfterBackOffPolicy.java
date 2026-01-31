@@ -5,6 +5,8 @@ import org.springframework.retry.backoff.BackOffContext;
 import org.springframework.retry.backoff.BackOffInterruptedException;
 import org.springframework.retry.backoff.BackOffPolicy;
 
+import java.time.Duration;
+
 /**
  * BackOffPolicy that waits for the duration specified by the Retry-After header
  * from the 429 response. The value is set in RetryContext by the RetryListener.
@@ -27,9 +29,8 @@ class RetryAfterBackOffPolicy implements BackOffPolicy {
         if (seconds == null) {
             seconds = DEFAULT_SECONDS;
         }
-        long ms = seconds * 1000L;
         try {
-            Thread.sleep(ms);
+            Thread.sleep(Duration.ofSeconds(seconds));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new BackOffInterruptedException("Interrupted while waiting for Retry-After", e);
@@ -46,11 +47,6 @@ class RetryAfterBackOffPolicy implements BackOffPolicy {
         context.setAttribute(RETRY_AFTER_SECONDS_ATTR, seconds);
     }
 
-    private static class RetryContextHolder implements BackOffContext {
-        final RetryContext context;
-
-        RetryContextHolder(RetryContext context) {
-            this.context = context;
-        }
+    private record RetryContextHolder(RetryContext context) implements BackOffContext {
     }
 }
