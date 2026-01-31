@@ -13,6 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Scheduler that periodically syncs available coins from Coingecko API to the local database.
+ * Runs every 10 minutes with an initial sync at startup.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -20,6 +24,10 @@ public class CoinSyncScheduler {
     private final CoingeckoCoinService coingeckoCoinService;
     private final CoinRepository coinRepository;
 
+    /**
+     * Fetches coins from Coingecko and replaces all coins in the database.
+     * Runs every 10 minutes (PT10M) with no initial delay (PT0S).
+     */
     @Scheduled(fixedRateString = "PT10M", initialDelayString = "PT0S")
     @Transactional
     public void syncCoins() {

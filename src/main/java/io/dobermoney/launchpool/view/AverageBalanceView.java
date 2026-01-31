@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * View for calculating average balance over a launchpool period.
+ * Allows users to define the period, add transactions, and compute the result.
+ */
 @Route(value = "average-balance", layout = MainLayout.class)
 public class AverageBalanceView extends VerticalLayout {
     private final DateTimePicker startPicker = new DateTimePicker("Launchpool Start");
@@ -35,6 +39,12 @@ public class AverageBalanceView extends VerticalLayout {
     private final List<Transaction> transactions = new ArrayList<>();
     private final AverageBalanceCalculator averageBalanceCalculator;
 
+    /**
+     * Creates the average balance view with date pickers, transaction grid, and calculation controls.
+     *
+     * @param coinService              service for loading available coins
+     * @param averageBalanceCalculator calculator for computing average balance
+     */
     public AverageBalanceView(CoinService coinService, AverageBalanceCalculator averageBalanceCalculator) {
         this.averageBalanceCalculator = averageBalanceCalculator;
 

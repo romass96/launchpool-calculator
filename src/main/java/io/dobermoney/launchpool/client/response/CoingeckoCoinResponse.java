@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * DTO for Coingecko /coins/markets API response.
+ */
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)

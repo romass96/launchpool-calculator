@@ -6,6 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+/**
+ * JPA entity representing a cryptocurrency coin stored in the database.
+ */
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +18,7 @@ import lombok.*;
 @Table(name = "coin")
 public class JpaCoin {
 
+    /** Unique identifier (e.g. bitcoin, ethereum). */
     @Id
     private String id;
 

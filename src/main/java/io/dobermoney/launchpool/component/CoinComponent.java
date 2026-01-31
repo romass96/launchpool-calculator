@@ -8,8 +8,16 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import io.dobermoney.launchpool.model.Coin;
 
+/**
+ * Vaadin component displaying a coin with its icon and symbol.
+ */
 public class CoinComponent extends Composite<HorizontalLayout> {
 
+    /**
+     * Creates a component showing the coin's image and symbol.
+     *
+     * @param coin the coin to display
+     */
     public CoinComponent(Coin coin) {
         var layout = getContent();
         layout.setAlignItems(FlexComponent.Alignment.CENTER);

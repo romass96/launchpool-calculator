@@ -6,10 +6,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * Main entry point for the Launchpool calculator application.
+ * Provides crypto tools including average balance calculation for launchpool staking periods.
+ */
 @SpringBootApplication
 @EnableConfigurationProperties(CoingeckoProperties.class)
 @EnableScheduling
 public class LaunchpoolServiceApplication {
+
+    /**
+     * Starts the Spring Boot application.
+     *
+     * @param args command line arguments passed to the application
+     */
     public static void main(String[] args) {
         SpringApplication.run(LaunchpoolServiceApplication.class, args);
     }

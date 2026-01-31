@@ -23,6 +23,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * CoinService implementation that fetches data from the Coingecko API.
+ * Uses retry logic with Retry-After header support for rate limit (429) responses.
+ */
 @Slf4j
 @Service
 public class CoingeckoCoinService implements CoinService {
@@ -33,6 +37,12 @@ public class CoingeckoCoinService implements CoinService {
     private final CoingeckoClient coingeckoClient;
     private final RetryTemplate retryTemplate;
 
+    /**
+     * Creates the Coingecko coin service with retry support and API configuration.
+     *
+     * @param retryTemplate         retry template for handling rate limits
+     * @param coingeckoProperties   API key and URL configuration
+     */
     public CoingeckoCoinService(@Qualifier("coingeckoRetryTemplate") RetryTemplate retryTemplate,
             CoingeckoProperties coingeckoProperties) {
         this.retryTemplate = retryTemplate;

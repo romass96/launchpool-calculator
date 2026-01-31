@@ -36,6 +36,12 @@ class RetryAfterBackOffPolicy implements BackOffPolicy {
         }
     }
 
+    /**
+     * Stores the retry-after duration in the RetryContext for use during backoff.
+     *
+     * @param context the retry context to store the value in
+     * @param seconds number of seconds to wait before retrying
+     */
     static void setRetryAfterSeconds(RetryContext context, long seconds) {
         context.setAttribute(RETRY_AFTER_SECONDS_ATTR, seconds);
     }

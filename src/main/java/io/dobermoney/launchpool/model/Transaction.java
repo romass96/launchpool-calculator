@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Represents a single launchpool transaction (deposit or withdrawal).
+ */
 @Setter
 @Getter
 @Builder

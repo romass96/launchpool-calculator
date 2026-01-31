@@ -8,8 +8,14 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 
+/**
+ * Main application layout with navigation drawer and header.
+ */
 public class MainLayout extends AppLayout {
 
+    /**
+     * Creates the main layout with header and navigation links.
+     */
     public MainLayout() {
         // --- Top navbar ---
         DrawerToggle toggle = new DrawerToggle(); // for responsive sidebar toggle

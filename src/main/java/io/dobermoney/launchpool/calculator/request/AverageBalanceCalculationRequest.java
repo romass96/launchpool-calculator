@@ -8,6 +8,9 @@ import lombok.Getter;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * Request object for average balance calculation over a launchpool period.
+ */
 @Builder
 @Getter
 public class AverageBalanceCalculationRequest {

@@ -14,16 +14,22 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.web.client.RestClientResponseException;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
+/**
+ * Configuration for retry behavior when calling Coingecko API.
+ * Handles 429 rate limit responses by retrying after the duration specified in the Retry-After header.
+ */
 @Slf4j
 @Configuration
 public class RetryConfig {
     private static final int MAX_ATTEMPTS = 5;
     private static final long DEFAULT_RETRY_AFTER_SECONDS = 60;
 
+    /**
+     * Creates a RetryTemplate bean configured for Coingecko API rate limit handling.
+     * Retries up to 5 times on 429 responses, waiting for the Retry-After header duration between attempts.
+     *
+     * @return configured RetryTemplate for Coingecko API calls
+     */
     @Bean
     public RetryTemplate coingeckoRetryTemplate() {
         var retryPolicy = new ExceptionClassifierRetryPolicy();
@@ -64,9 +70,7 @@ public class RetryConfig {
     }
 
     /**
-     * Parses Retry-After header from the exception. Supports:
-     * - Delay in seconds (e.g. "60")
-     * - HTTP-date (e.g. "Wed, 21 Oct 2015 07:28:00 GMT")
+     * Parses Retry-After header from the exception. Supports delay in seconds (e.g. "60")
      */
     private static long parseRetryAfter(Throwable e) {
         RestClientResponseException rcre = findRestClientResponseException(e);
@@ -77,7 +81,7 @@ public class RetryConfig {
         if (headers == null) {
             return DEFAULT_RETRY_AFTER_SECONDS;
         }
-        String value = headers.getFirst("Retry-After");
+        String value = headers.getFirst(HttpHeaders.RETRY_AFTER);
         if (value == null || value.isBlank()) {
             return DEFAULT_RETRY_AFTER_SECONDS;
         }
@@ -85,13 +89,6 @@ public class RetryConfig {
         try {
             return Long.parseLong(value);
         } catch (NumberFormatException ignored) {
-            // Try parsing as HTTP-date
-        }
-        try {
-            ZonedDateTime retryDate = ZonedDateTime.parse(value, DateTimeFormatter.RFC_1123_DATE_TIME);
-            long seconds = ChronoUnit.SECONDS.between(ZonedDateTime.now(), retryDate);
-            return Math.max(1, seconds);
-        } catch (Exception ignored) {
             return DEFAULT_RETRY_AFTER_SECONDS;
         }
     }

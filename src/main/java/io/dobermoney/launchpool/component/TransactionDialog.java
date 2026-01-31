@@ -23,18 +23,28 @@ import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * Dialog for creating or editing a launchpool transaction.
+ */
 public class TransactionDialog extends Composite<Dialog> {
     private final DateTimePicker dateTimeField;
     private final Select<TransactionType> typeField;
     private final NumberField amountField;
     private final ComboBox<Coin> coinField;
 
+    /** The transaction being created or edited. */
     @Getter
     private final Transaction transaction;
 
+    /** Callback invoked when the user saves the transaction. */
     @Setter
     private Runnable onSaveAction;
 
+    /**
+     * Creates a dialog for adding a new transaction.
+     *
+     * @param coins available coins to choose from
+     */
     public TransactionDialog(Set<Coin> coins) {
         this(
                 Transaction.builder()
@@ -45,6 +55,12 @@ public class TransactionDialog extends Composite<Dialog> {
         );
     }
 
+    /**
+     * Creates a dialog for editing an existing transaction.
+     *
+     * @param transaction the transaction to edit
+     * @param coins       available coins to choose from
+     */
     public TransactionDialog(Transaction transaction, Set<Coin> coins) {
         this.coinField = buildCoinField(coins);
         this.dateTimeField = buildDateTimeField();
@@ -62,6 +78,9 @@ public class TransactionDialog extends Composite<Dialog> {
         setTransactionFields();
     }
 
+    /**
+     * Opens the dialog.
+     */
     public void open() {
         getContent().open();
     }

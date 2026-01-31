@@ -13,12 +13,23 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Calculates the time-weighted average balance in USD for a launchpool period
+ * based on transactions and historical coin prices.
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class AverageBalanceCalculator {
     private final CoinService coinService;
 
+    /**
+     * Calculates the average balance in the requested currency for the given period.
+     *
+     * @param request the calculation request with transactions and time range
+     * @return the time-weighted average balance
+     * @throws IllegalArgumentException if the period is invalid (from after to, or null)
+     */
     public double calculate(AverageBalanceCalculationRequest request) {
         var from = request.getFrom();
         var to = request.getTo();
