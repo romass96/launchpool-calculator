@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Primary CoinService implementation that serves coins from the database
+ * Primary {@link CoinService} implementation that serves coins from the database
  * and delegates price lookups to Coingecko. Coins are synced from Coingecko periodically.
  */
 @Service

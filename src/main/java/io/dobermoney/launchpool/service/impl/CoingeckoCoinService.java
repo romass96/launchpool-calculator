@@ -38,8 +38,7 @@ public class CoingeckoCoinService implements CoinService {
     @Override
     public Set<Coin> readCoins() {
         return IntStream.rangeClosed(1, 6) // 6 pages: 6 * 250 = 1500 coins
-                .mapToObj(page -> retryTemplate.execute(context ->
-                        coingeckoClient.coinsMarkets(Currency.USD.getCode(), ORDER, PAGE_SIZE, page)))
+                .mapToObj(this::readCoinsWithRetry)
                 .flatMap(Collection::stream)
                 .map(this::toCoin)
                 .collect(Collectors.toSet());
@@ -59,6 +58,11 @@ public class CoingeckoCoinService implements CoinService {
                     .map(data -> toCoinPrice(data, coin))
                     .collect(Collectors.toSet());
         });
+    }
+
+    private List<CoingeckoCoinResponse> readCoinsWithRetry(int page) {
+        return retryTemplate.execute(context ->
+                coingeckoClient.coinsMarkets(Currency.USD.getCode(), ORDER, PAGE_SIZE, page));
     }
 
     private Coin toCoin(CoingeckoCoinResponse coinResponse) {

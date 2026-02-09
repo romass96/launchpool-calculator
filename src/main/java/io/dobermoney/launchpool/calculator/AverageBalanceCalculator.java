@@ -69,7 +69,8 @@ public class AverageBalanceCalculator {
                         });
                 var coinPrices = coinPriceMap.get(coin);
                 var coinHourlyBalance = hourlyBalance.get(coin.getId());
-                var usdHourlyBalanceChange = coinHourlyBalance * findCoinPriceAtRange(rangeStart, rangeEnd, coinPrices);
+                var usdHourlyBalanceChange = coinHourlyBalance == 0 ?
+                        0 : coinHourlyBalance * findCoinPriceAtRange(rangeStart, rangeEnd, coinPrices);
                 hourlyBalance.compute(Currency.USD.getCode(), (key, value) -> value + usdHourlyBalanceChange);
                 System.out.println(hourlyBalance.get(Currency.USD.getCode()) + " , start = " + rangeStart + ", end = " + rangeEnd);
             }
@@ -112,6 +113,6 @@ public class AverageBalanceCalculator {
                 .filter(coinPrice -> isInRange(rangeStart, rangeEnd, coinPrice.timestamp().getEpochSecond()))
                 .map(CoinPrice::price)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find coin price for date range " + rangeStart + " - " + rangeEnd));
     }
 }

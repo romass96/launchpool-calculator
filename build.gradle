@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.springframework.retry:spring-retry:2.0.12'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.wiremock:wiremock-standalone:3.3.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     compileOnly 'org.projectlombok:lombok'
@@ -37,6 +38,8 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+
+    developmentOnly('com.vaadin:vaadin-dev')
 }
 
 dependencyManagement {
