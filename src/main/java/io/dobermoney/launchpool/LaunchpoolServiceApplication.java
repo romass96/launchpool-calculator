@@ -14,12 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableConfigurationProperties(CoingeckoProperties.class)
 @EnableScheduling
 public class LaunchpoolServiceApplication {
-
-    /**
-     * Starts the Spring Boot application.
-     *
-     * @param args command line arguments passed to the application
-     */
     public static void main(String[] args) {
         SpringApplication.run(LaunchpoolServiceApplication.class, args);
     }
